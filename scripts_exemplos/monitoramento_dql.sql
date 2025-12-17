@@ -45,3 +45,42 @@ select tempo_max, tempo_min from dbo.tempo
 
 select id from dbo.cidade
     where estado = 'BA'
+
+select cid.nome, cid.estado, loc.latitude, loc.longitude
+    from dbo.cidade cid CROSS JOIN dbo.localizacao loc
+    where cid.id = loc.id_cidade;
+
+/*markdown
+Operador Interno (INNER JOIN)
+*/
+
+select cid.nome, cid.estado, loc.latitude, loc.longitude
+    from dbo.cidade cid INNER JOIN dbo.localizacao loc
+    ON (cid.id = loc.id_cidade);
+
+--mais eficiente que cross
+
+alter table dbo.localizacao alter column id_cidade drop not null;
+
+insert into dbo.localizacao (latitude, longitude, id_cidade) 
+    (23.67, 54.34, null), (23.67, 55.77, null)
+
+/*markdown
+Operador Externo (OUTER JOIN)
+*/
+
+/*markdown
+Listar as cidades e as suas localizações inclusive as cidades que não possuim localização
+*/
+
+select cid.nome, cid.estado, loc.latitude, loc.longitude
+    from dbo.cidade cid LEFT OUTER JOIN dbo.localizacao loc
+    ON (cid.id = loc.id_cidade);
+
+/*markdown
+FULL JOIN
+*/
+
+select cid.nome, cid.estado, loc.latitude, loc.longitude
+    from dbo.cidade cid FULL JOIN dbo.localizacao loc
+    ON (cid.id = loc.id_cidade);
